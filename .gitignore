@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# Data files
+*.h5
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.csv
+*.jpg
+*.png
+
+# Logs and outputs
+*.log
+*.out
+*.err
+outputs/
+logs/
+
+# Checkpoints and models
+checkpoint/
+models/
+*.pth
+*.pt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

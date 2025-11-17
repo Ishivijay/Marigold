@@ -1,0 +1,6 @@
+name: kitti_depth
+disp_name: kitti_depth_eigen_test_full
+dir: /home/woody/iwnt/iwnt164h/kitti/kitti_eigen_split_test.tar #kitti/kitti_eigen_split_test.tar
+filenames: Marigold/data_split/kitti_depth/eigen_test_files_with_gt.txt #data_split/kitti_depth/eigen_test_files_with_gt.txt
+kitti_bm_crop: true
+valid_mask_crop: eigen
