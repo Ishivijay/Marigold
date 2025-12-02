@@ -53,6 +53,7 @@ from .oasis_dataset import OasisNormalsDataset
 from .scannet_dataset import ScanNetDepthDataset, ScanNetNormalsDataset
 from .sintel_dataset import SintelNormalsDataset
 from .vkitti_dataset import VirtualKITTIDepthDataset
+from .mlp_dataset import MLPDepthDataset
 
 dataset_name_class_dict = {
     "hypersim_depth": HypersimDepthDataset,
@@ -62,6 +63,7 @@ dataset_name_class_dict = {
     "eth3d_depth": ETH3DDepthDataset,
     "diode_depth": DIODEDepthDataset,
     "scannet_depth": ScanNetDepthDataset,
+    "mlp_depth": MLPDepthDataset,
     "hypersim_normals": HypersimNormalsDataset,
     "interiorverse_normals": InteriorVerseNormalsDataset,
     "sintel_normals": SintelNormalsDataset,
