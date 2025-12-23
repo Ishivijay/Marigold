@@ -1,5 +1,14 @@
+# name: mlp_depth
+# disp_name: mlp_prosthesis_test
+# dir: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/Data
+# filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/Data/mlp_prosthesis_test_files.txt
+# eigen_valid_mask: true
+
+
+
 name: mlp_depth
-disp_name: mlp_prosthesis_test
-dir: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/Data
-filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/Data/mlp_prosthesis_test_files.txt
-eigen_valid_mask: true
+disp_name: mlp_prosthesis_val
+dir: ""
+filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_80_20/val_list.txt
+resize_to_hw: null
+eigen_valid_mask: false

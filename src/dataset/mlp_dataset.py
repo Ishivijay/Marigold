@@ -20,13 +20,6 @@ class MLPDepthDataset(BaseDepthDataset):
         )
         
         self.eigen_valid_mask = eigen_valid_mask
-        
-        # Optional: Filter out files where depth doesn't exist
-        filtered_filenames = []
-        for line in self.filenames:
-            if len(line) >= 2:  # Must have at least rgb and depth paths
-                filtered_filenames.append(line)
-        self.filenames = filtered_filenames
 
     def _read_depth_file(self, rel_path):
         """Read depth file for MLP prosthesis dataset"""

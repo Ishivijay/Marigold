@@ -99,10 +99,18 @@ class MarigoldDepthTrainer:
         self.model.vae.requires_grad_(False)
         self.model.text_encoder.requires_grad_(False)
         self.model.unet.requires_grad_(True)
+        self.model.unet.enable_gradient_checkpointing()
 
         # Optimizer !should be defined after input layer is adapted
         lr = self.cfg.lr
-        self.optimizer = Adam(self.model.unet.parameters(), lr=lr)
+        # Use 8-bit Adam to reduce optimizer state memory by ~75%
+        try:
+            import bitsandbytes as bnb
+            self.optimizer = bnb.optim.AdamW8bit(self.model.unet.parameters(), lr=lr)
+            logging.info("Using 8-bit AdamW optimizer for reduced memory usage")
+        except ImportError:
+            logging.warning("bitsandbytes not installed, falling back to standard Adam")
+            self.optimizer = Adam(self.model.unet.parameters(), lr=lr)
 
         # LR scheduler
         lr_func = IterExponential(
