@@ -1,0 +1,6 @@
+name: mlp_depth
+disp_name: finetune_test_kfold_5_1
+dir: "finetune_data"
+filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/finetune_splits/kfold_5_1/test.txt
+resize_to_hw: null
+eigen_valid_mask: false

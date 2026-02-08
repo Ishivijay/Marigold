@@ -6,28 +6,27 @@ base_config:
 dataset:
   train:
     name: mlp_depth
-    disp_name: mlp_prosthesis_train
+    disp_name: lora_random_70_30_train
     dir: ""
-    filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_80_20/train_list.txt
+    filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_70_30/train_list.txt
     resize_to_hw: [384, 512]
     eigen_valid_mask: false
   
   val:
     - name: mlp_depth
-      disp_name: mlp_prosthesis_val
+      disp_name: lora_random_70_30_val
       dir: ""
-      filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_80_20/val_list.txt
+      filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_70_30/val_list.txt
       resize_to_hw: null
       eigen_valid_mask: false
 
   vis:
     - name: mlp_depth
-      disp_name: mlp_prosthesis_vis
+      disp_name: lora_random_70_30
       dir: ""
-      filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_80_20/val_list.txt
+      filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_70_30/val_list.txt
       resize_to_hw: null
       eigen_valid_mask: false
-
 
 pipeline:
   name: MarigoldDepthPipeline
@@ -54,7 +53,7 @@ dataloader:
   seed: 2024
 
 trainer:
-  name: MarigoldDepthTrainer
+  name: MarigoldDepthTrainerLoRA
   training_noise_scheduler:
     pretrained_path: stable-diffusion-2
   init_seed: 2024
@@ -63,6 +62,14 @@ trainer:
   validation_period: 999999
   visualization_period: 999999
   enable_gradient_checkpointing: true
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.15
+  lora_target_modules:
+    - "to_q"
+    - "to_k"
+    - "to_v"
+    - "to_out.0"
 
 multi_res_noise:
   strength: 0.9
@@ -72,8 +79,8 @@ multi_res_noise:
 gt_depth_type: depth_raw_norm
 gt_mask_type: valid_mask_raw
 
-max_epoch: 10000
-max_iter: 3000
+max_epoch: 6000
+max_iter: 2000
 
 optimizer:
   name: AdamW8bit
@@ -83,13 +90,13 @@ loss:
   kwargs:
     reduction: mean
 
-lr: 3.0e-05
+lr: 1.0e-04
 lr_scheduler:
   name: IterExponential
   kwargs:
-    total_iter: 2500
+    total_iter: 2000
     final_ratio: 0.01
-    warmup_steps: 100
+    warmup_steps: 50
 
 validation:
   denoising_steps: 1
@@ -116,10 +123,9 @@ eval:
   - i_rmse
   - silog_rmse
 
-# Add this new section
 gradient_checkpointing: true
+weight_decay: 0.01
 
-# And also enable it in the model config
 model:
   pretrained_path: stable-diffusion-2
-  enable_xformers_memory_efficient_attention: true  # Also helps with memory
+  enable_xformers_memory_efficient_attention: true

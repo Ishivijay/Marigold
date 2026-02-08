@@ -9,6 +9,6 @@
 name: mlp_depth
 disp_name: mlp_prosthesis_val
 dir: ""
-filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/random_80_20/val_list.txt
+filenames: /home/woody/iwnt/iwnt164h/mlp_dataset/prospthesisproject-Data/Code/data_split/kfold_5_1/val_list.txt
 resize_to_hw: null
 eigen_valid_mask: false
