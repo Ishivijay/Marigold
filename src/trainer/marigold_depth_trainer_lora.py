@@ -197,7 +197,7 @@ class MarigoldDepthTrainerLoRA(BaseTrainer):
         self.global_seed_sequence = []
     
     def save_checkpoint(self, ckpt_name, save_train_state):
-        """Override to save LoRA adapter separately."""
+        """Override to save merged LoRA weights for inference."""
         ckpt_dir = os.path.join(self.out_dir_ckpt, ckpt_name)
         logging.info(f"Saving LoRA checkpoint: {ckpt_name}")
         
@@ -208,12 +208,17 @@ class MarigoldDepthTrainerLoRA(BaseTrainer):
                 shutil.rmtree(temp_ckpt_dir, ignore_errors=True)
             os.rename(ckpt_dir, temp_ckpt_dir)
         
-        # Save UNet with LoRA
-        unet_path = os.path.join(ckpt_dir, "unet")
-        self.model.unet.save_pretrained(unet_path, safe_serialization=True)
+        # Merge LoRA weights into base model for inference
+        logging.info("Merging LoRA weights for inference...")
+        merged_unet = self.model.unet.merge_and_unload()
         
-        # Save LoRA adapter separately
+        # Save merged UNet (standard format for inference)
+        unet_path = os.path.join(ckpt_dir, "unet")
+        merged_unet.save_pretrained(unet_path, safe_serialization=True)
+        
+        # Save LoRA adapter separately for potential resume
         lora_path = os.path.join(ckpt_dir, "lora_adapter")
+        # Re-wrap with LoRA for adapter-only save
         self.model.unet.save_pretrained(lora_path, safe_serialization=True)
         
         # Save scheduler
